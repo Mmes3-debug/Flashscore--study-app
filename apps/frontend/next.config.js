@@ -51,6 +51,12 @@ const nextConfig = {
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
     };
     
+    // Fix module resolution for monorepo
+    config.resolve.modules = [
+      'node_modules',
+      ...(config.resolve.modules || [])
+    ];
+    
     // Handle module resolution errors
     config.resolve.fallback = {
       ...config.resolve.fallback,
