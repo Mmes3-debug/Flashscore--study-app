@@ -17,9 +17,11 @@
   --ios-teal: #5AC8FA;
   --ios-yellow: #FFD700;
 
-  /* Sports Central Brand Colors */
+  /* Sports Central Brand Colors - Enhanced */
   --brand-primary: #00ff88;
+  --brand-primary-glow: rgba(0, 255, 136, 0.4);
   --brand-secondary: #007AFF;
+  --brand-secondary-glow: rgba(0, 122, 255, 0.4);
   --brand-accent: #FF6B35;
   --brand-success: #34C759;
   --brand-warning: #FFD700;
@@ -64,10 +66,12 @@
   background-attachment: fixed;
 }
 
-/* Dark mode (Night theme) background */
+/* Dark mode (Night theme) background - Enhanced */
 .dark body {
   background: 
-    radial-gradient(ellipse at top, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at top left, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at center, rgba(139, 92, 246, 0.05) 0%, transparent 60%),
     linear-gradient(135deg, 
       #0a0e1a 0%, 
       #0f172a 25%, 
@@ -76,6 +80,27 @@
       #0a0e1a 100%
     );
   background-attachment: fixed;
+  position: relative;
+}
+
+.dark body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(0, 255, 136, 0.03) 0%, transparent 25%),
+    radial-gradient(circle at 70% 60%, rgba(59, 130, 246, 0.03) 0%, transparent 25%);
+  pointer-events: none;
+  animation: atmosphericShift 20s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes atmosphericShift {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
 }
 
 .light .particle {
@@ -169,35 +194,64 @@ body {
 /* Enhanced Material Cards with Premium Glassmorphism */
 .glass-card, .ios-card {
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.12) 0%, 
-    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.14) 0%, 
+    rgba(255, 255, 255, 0.10) 30%,
+    rgba(255, 255, 255, 0.06) 70%,
     rgba(255, 255, 255, 0.04) 100%
   );
-  backdrop-filter: blur(24px) saturate(1.8);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+  backdrop-filter: blur(28px) saturate(1.8) brightness(1.1);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 1px 0 rgba(255, 255, 255, 0.2) inset;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
   position: relative;
   overflow: hidden;
+}
+
+.glass-card::after, .ios-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 20%,
+    transparent 80%,
+    rgba(0, 255, 136, 0.2) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 /* Enhanced Interactive States */
 .ios-card:hover {
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.18) 0%, 
-    rgba(255, 255, 255, 0.12) 50%,
-    rgba(255, 255, 255, 0.08) 100%
+    rgba(255, 255, 255, 0.20) 0%, 
+    rgba(255, 255, 255, 0.14) 40%,
+    rgba(255, 255, 255, 0.10) 100%
   );
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-6px) scale(1.02);
   box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(0, 255, 136, 0.3),
-    0 0 24px rgba(0, 255, 136, 0.2);
-  border-color: rgba(0, 255, 136, 0.3);
+    0 20px 60px rgba(0, 0, 0, 0.45),
+    0 8px 20px rgba(0, 255, 136, 0.15),
+    0 0 0 1px rgba(0, 255, 136, 0.4),
+    0 0 32px rgba(0, 255, 136, 0.25),
+    0 0 60px rgba(59, 130, 246, 0.15);
+  border-color: rgba(0, 255, 136, 0.4);
+}
+
+.ios-card:hover::after {
+  opacity: 1;
 }
 
 .ios-card::before {
@@ -228,19 +282,31 @@ body {
 .ios-button {
   background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 16px;
-  padding: 14px 24px;
+  padding: 14px 28px;
   font-size: 17px;
   font-weight: 600;
   line-height: 22px;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 4px 16px rgba(0, 122, 255, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    0 6px 20px rgba(0, 122, 255, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.15) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+}
+
+.ios-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .ios-button::before {
@@ -262,12 +328,22 @@ body {
 }
 
 .ios-button:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.15);
+  box-shadow: 
+    0 10px 30px rgba(0, 122, 255, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 0 40px rgba(0, 122, 255, 0.3);
+}
+
+.ios-button:hover::after {
+  opacity: 1;
 }
 
 .ios-button:active {
-  transform: scale(0.95);
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .ios-button-secondary {
@@ -457,15 +533,21 @@ body {
 /* Enhanced Module Cards */
 .module-card {
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.08) 50%,
     rgba(255, 255, 255, 0.05) 100%);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 24px;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  padding: 28px;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset;
 }
 
 .module-card::before {
@@ -871,6 +953,31 @@ input:focus, textarea:focus, select:focus {
   75% { transform: translateY(-15px) rotate(-1deg); }
 }
 
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes rotateGlow {
+  0% { 
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3),
+                0 0 40px rgba(59, 130, 246, 0.2);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.4),
+                0 0 50px rgba(0, 255, 136, 0.3);
+  }
+  100% { 
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3),
+                0 0 40px rgba(59, 130, 246, 0.2);
+  }
+}
+
 @keyframes glow-pulse {
   0%, 100% { 
     box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
@@ -985,10 +1092,31 @@ input:focus, textarea:focus, select:focus {
 }
 
 .text-gradient {
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: shimmerText 3s ease-in-out infinite;
+}
+
+@keyframes shimmerText {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+.text-gradient-static {
   background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-glow {
+  text-shadow: 
+    0 0 10px var(--brand-primary-glow),
+    0 0 20px var(--brand-primary-glow),
+    0 0 30px var(--brand-primary-glow);
 }
 
 /* Enhanced Input Styles */
