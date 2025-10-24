@@ -19,6 +19,7 @@ import { HydrationMonitor } from '@components/HydrationMonitor';
 import { HydrationCoordinator } from '@components/HydrationCoordinator';
 import { ThemeInitializer } from '@components/ThemeInitializer';
 import { RenderDebugger } from '@components/RenderDebugger';
+import { DebugPanel } from '../components/DebugPanel';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -116,6 +117,9 @@ export default async function RootLayout({
           <SpeedInsights />
           <Suspense fallback={null}>
             <RenderDebugger />
+          </Suspense>
+          <Suspense fallback={null}>
+            <DebugPanel />
           </Suspense>
         </HydrationCoordinator>
       </body>
